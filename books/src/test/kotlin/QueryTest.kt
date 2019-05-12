@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 
-public class BookTest {
+public class QueryTest {
     @Test
     @DisplayName("should convert a string into a Book")
     fun parseBookTest() {
