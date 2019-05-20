@@ -1,7 +1,5 @@
 package functors
 
-class Functor<T>(val value: T) {
-    fun map(function: (T) -> T): Functor<T> {
-        return Functor(function(value))
-    }
+class Functor<out A>(val value: A) {
+    inline fun <B> map(f: (A) -> B): Functor<B> = Functor(f(value))
 }
