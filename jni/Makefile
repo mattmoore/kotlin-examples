@@ -1,4 +1,16 @@
-all: kotlin native
+all: native kotlin
+
+native:
+	@echo "Building C code."
+	@if [ ! -d build/libs/shared ]; then mkdir -p build/libs/shared; fi
+	@gcc \
+		-o build/libs/shared/libhello.dylib \
+		-shared -fPIC \
+		-I/usr/lib/jvm/java-12-openjdk-amd64/include \
+		-I/usr/lib/jvm/java-12-openjdk-amd64/include/linux \
+		-I/Library/Java/JavaVirtualMachines/openjdk-12.0.1.jdk/Contents/Home/include \
+		-I/Library/Java/JavaVirtualMachines/openjdk-12.0.1.jdk/Contents/Home/include/darwin \
+		src/main/c/*.c
 
 kotlin:
 	@echo "Building Kotlin code."
@@ -7,17 +19,6 @@ kotlin:
 		-d build/libs/greeting.jar \
 		-include-runtime \
 		src/main/kotlin/*.kt
-
-native:
-	@echo "Building C code."
-	@if [ ! -d build/libs/shared ]; then mkdir -p build/libs/shared; fi
-	@gcc \
-		-o build/libs/shared/libhello.so \
-		-shared -fPIC \
-		-I /usr/lib/jvm/java-12-openjdk-amd64/include \
-		-I /usr/lib/jvm/java-12-openjdk-amd64/include/linux \
-		src/main/c/*.c \
-		src/main/c/*.h
 
 clean:
 	@if [ -d build ]; then rm -rf build; fi
